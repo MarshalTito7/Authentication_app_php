@@ -15,7 +15,7 @@
 
         $query = "SELECT * FROM login_creds WHERE username LIKE '$user_id'";
 
- 
+
         // get result
         $result = mysqli_query($conn , $query);
 
@@ -44,7 +44,7 @@
 
         //Free the result
         mysqli_free_result($result);
-        
+            
     }
     
     
@@ -62,7 +62,7 @@
                 <?php echo $message; ?>
             </strong>
         </div>
-        <h1 class = " mx-2 my-2">Sign In</h1>
+        <h1 class = " mx-2 my-2">Sign Up</h1>
         <div class="card px-4 py-4 my-3">
             <form action="<?php $_SERVER['PHP_SELF']; ?>" method="POST">
                 <fieldset>                      
@@ -75,7 +75,7 @@
                         <label for="exampleInputPassword1" class="form-label mt-4">Password</label>
                         <input type="password" class="form-control" id="exampleInputPassword1" name = "password" placeholder="Password" required>
                     </div>
-                    <input type="submit" name="submit" value = "Login" class="btn btn-success my-4">  
+                    <input type="submit" name="submit" value = "Create Profile" class="btn btn-success my-4">  
                 </fieldset>
             </form>
         </div>
