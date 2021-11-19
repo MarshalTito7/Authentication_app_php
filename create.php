@@ -12,6 +12,7 @@
         // Get form data
         $user_id = mysqli_real_escape_string($conn ,$_POST['username']);
         $pass = mysqli_real_escape_string($conn, $_POST['password']);
+        $hash = password_hash($pass, PASSWORD_DEFAULT);
 
         $query = "SELECT * FROM login_creds WHERE username LIKE '$user_id'";
 
@@ -25,7 +26,7 @@
             # code...
             $flag = 'alert alert-dismissible alert-success';
             
-            $query = "INSERT INTO login_creds(username,password) VALUES('$user_id','$pass')";
+            $query = "INSERT INTO login_creds(username,password) VALUES('$user_id','$hash')";
 
             if(mysqli_query($conn,$query)){
                 $message = 'Profile Successfully Created';
@@ -54,29 +55,26 @@
 ?>
 
 <?php include('inc/header.php'); ?>
-    <div class="container my-5">
+    <div class="conatiner mx-5 my-5 px-5">
         <div class="<?php echo $flag ?>" style = "display : <?php echo $visibility ?>">
-            <button type="button" id="close" class="btn-close" data-bs-dismiss="alert"></button>
-            <strong>
-                <?php echo $message; ?>
-            </strong>
+            <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+            <strong><?php echo $message; ?></strong> 
         </div>
         <h1 class = " mx-2 my-2">Sign Up</h1>
         <div class="card px-4 py-4 my-3">
             <form action="<?php $_SERVER['PHP_SELF']; ?>" method="POST">
-                <fieldset>                      
+                <fieldset>
                     <div class="form-group">
-                        <label for="exampleInputEmail1" class="form-label mt-4">Username</label>
-                        <input type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter username" name = "username" required>
-                        <small id="emailHelp" class="form-text text-muted">We'll never share your credentials with anyone else.</small>
+                        <label class="form-label mt-4">Username</label>
+                        <input type="text" class="form-control" name="username" placeholder="Enter username" required>
                     </div>
                     <div class="form-group">
-                        <label for="exampleInputPassword1" class="form-label mt-4">Password</label>
-                        <input type="password" class="form-control" id="exampleInputPassword1" name = "password" placeholder="Password" required>
+                        <label class="form-label mt-4">Password</label>
+                        <input type="password" class="form-control" name="password" placeholder="Enter password" required>
                     </div>
-                    <input type="submit" name="submit" value = "Create Profile" class="btn btn-success my-4">  
+                    <input type="submit" name="submit" value = "Create Profile" class="btn btn-success my-4"> 
                 </fieldset>
             </form>
         </div>
-    </div>   
+    </div>
 <?php include('inc/footer.php'); ?>

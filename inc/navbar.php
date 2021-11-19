@@ -18,6 +18,7 @@
         <li class="nav-item">
           <a class="nav-link"  href="<?php echo ROOT_URL; ?>create.php">Sign Up</a>
         </li>
+      </ul>
     </div>
   </div>
 </nav>
