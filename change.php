@@ -13,7 +13,6 @@
         $user_id = mysqli_real_escape_string($conn ,$_POST['username']);
         $pass = mysqli_real_escape_string($conn, $_POST['password']);
         $new_pass = mysqli_real_escape_string($conn, $_POST['new_password']);
-        $hash1 = password_hash($pass, PASSWORD_DEFAULT);
         $hash2 = password_hash($new_pass, PASSWORD_DEFAULT);
 
         $query = "SELECT * FROM login_creds WHERE username LIKE '$user_id'";
@@ -32,7 +31,7 @@
         } else {
             # code...
             foreach($creds as $cred){
-                if (password_verify($pass, $hash1)) {
+                if (password_verify($pass, $cred['password'])) {
                     # code...
                     $flag = 'alert alert-dismissible alert-success';
                     
@@ -45,7 +44,8 @@
                     else {
                         echo 'ERROR: '. mysqli_error($conn);
                     }
-                }else{
+                }
+                else{
                     $flag = 'alert alert-dismissible alert-danger';
                     $message = 'Incorrect Password';
                 }

@@ -12,8 +12,7 @@
         // Get form data
         $user_id = mysqli_real_escape_string($conn ,$_POST['username']);
         $pass = mysqli_real_escape_string($conn, $_POST['password']);
-        $hash = password_hash($pass, PASSWORD_DEFAULT);
-        
+
         $query = "SELECT * FROM login_creds WHERE username LIKE '$user_id'";
 
         // get result
@@ -29,7 +28,7 @@
         } else {
             # code...
             foreach($creds as $cred){
-                if (password_verify($pass, $hash)) {
+                if (password_verify($pass, $cred['password'])) {
                     # code...
                     $flag = 'alert alert-dismissible alert-success';
                     $message = 'Welcome! Sucessful Login';
