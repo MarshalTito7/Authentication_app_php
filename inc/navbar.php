@@ -13,7 +13,7 @@
           </a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="#">Features</a>
+          <a class="nav-link"  href="<?php echo ROOT_URL; ?>change.php">Forgot Password</a>
         </li>
     </div>
   </div>

@@ -2,6 +2,9 @@
     require('config/config.php');
     require('config/db.php');
 
+    $flag = 0;
+    $message = 'hello';
+    $visibility = 'none';
 
     // check for submit
     if(isset($_POST['submit'])){
@@ -19,13 +22,36 @@
         // Fetch data
         $creds = mysqli_fetch_all($result, MYSQLI_ASSOC);
 
-        var_dump($creds);
-        
+        if (empty($creds)) {
+            # code...
+            $flag = 'alert alert-dismissible alert-danger';
+            $message = 'Invalid username';
+        } else {
+            # code...
+            foreach($creds as $cred){
+                if ($pass !== $cred["password"]) {
+                    $flag = 'alert alert-dismissible alert-danger';
+                    $message = 'Incorrect Password';
+                } elseif ($pass === $cred["password"]) {
+                    # code...
+                    $flag = 'alert alert-dismissible alert-success';
+                    $message = 'Welcome! Sucessful Login';
+                }
+            }
+            
+        }
+        $visibility = 'block';
+
+        // var_dump($creds);
+        // var_dump($result);
+        // var_dump($message);
+        // var_dump($cred);
+          //Free the result
+        mysqli_free_result($result);
         
     }
     
-    //Free the result
-    mysqli_free_result($result);
+    
 
     // CLose Connection
     mysqli_close($conn);
@@ -34,6 +60,12 @@
 
 <?php include('inc/header.php'); ?>
     <div class="container my-5">
+        <div class="<?php echo $flag ?>" style = "display : <?php echo $visibility ?>">
+            <button type="button" id="close" class="btn-close" data-bs-dismiss="alert"></button>
+            <strong>
+                <?php echo $message; ?>
+            </strong>
+        </div>
         <h1 class = " mx-2 my-2">Sign In</h1>
         <div class="card px-4 py-4 my-3">
             <form action="<?php $_SERVER['PHP_SELF']; ?>" method="POST">
@@ -50,6 +82,6 @@
                     <input type="submit" name="submit" value = "Login" class="btn btn-warning my-4">  
                 </fieldset>
             </form>
-        </div>    
-    </div>
+        </div>
+    </div>   
 <?php include('inc/footer.php'); ?>
