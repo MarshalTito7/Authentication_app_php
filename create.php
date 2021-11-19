@@ -15,7 +15,6 @@
 
         $query = "SELECT * FROM login_creds WHERE username LIKE '$user_id'";
 
-
         // get result
         $result = mysqli_query($conn , $query);
 
@@ -24,21 +23,21 @@
 
         if (empty($creds)) {
             # code...
-            $flag = 'alert alert-dismissible alert-danger';
-            $message = 'Invalid username';
+            $flag = 'alert alert-dismissible alert-success';
+            
+            $query = "INSERT INTO login_creds(username,password) VALUES('$user_id','$pass')";
+
+            if(mysqli_query($conn,$query)){
+                $message = 'Profile Successfully Created';
+            }
+            else {
+                echo 'ERROR: '. mysqli_error($conn);
+            }
+
         } else {
             # code...
-            foreach($creds as $cred){
-                if ($pass !== $cred["password"]) {
-                    $flag = 'alert alert-dismissible alert-danger';
-                    $message = 'Incorrect Password';
-                } elseif ($pass === $cred["password"]) {
-                    # code...
-                    $flag = 'alert alert-dismissible alert-success';
-                    $message = 'Welcome! Sucessful Login';
-                }
-            }
-            
+            $flag = 'alert alert-dismissible alert-danger';
+            $message = 'Profile already exists';
         }
         $visibility = 'block';
 
